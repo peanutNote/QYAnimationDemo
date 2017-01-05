@@ -1,22 +1,21 @@
 //
-//  ViewController.m
+//  CustomTransitionAnimationController.m
 //  QYAnimationDemo
 //
 //  Created by qianye on 17/1/5.
 //  Copyright © 2017年 qianye. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "UIViewPropertyAnimationController.h"
-#import "CATransitionAnimationController.h"
 #import "CustomTransitionAnimationController.h"
-#import "CAAnimationController.h"
+#import "UIViewController+CustomTransitionAnimation.h"
+#import "CustomAnimationController.h"
+#import "SwitchChildViewController.h"
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface CustomTransitionAnimationController ()<UITableViewDelegate, UITableViewDataSource>
 
 @end
 
-@implementation ViewController {
+@implementation CustomTransitionAnimationController {
     UITableView *_tableView;
     NSArray *_titleArray;
 }
@@ -26,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _titleArray = @[@"UIView属性动画", @"CATransition动画", @"CAAnimation动画", @"自定义过场动画"];
+    _titleArray = @[@"自定义模态弹出动画", @"自定义导航栏push动画", @"有关ChildViewController的应用"];
     [self mmInitViews];
 }
 
@@ -48,7 +47,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = _titleArray[indexPath.row];
     return cell;
 }
@@ -56,22 +54,24 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     if (indexPath.row == 0) {
-        UIViewPropertyAnimationController *vc = [[UIViewPropertyAnimationController alloc] init];
-        vc.title = _titleArray[indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];
+        CustomAnimationController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Custom"];
+        vc.type = indexPath.row;
+        [self customPresentViewController:vc];
     } else if (indexPath.row == 1) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"transition"];
-        vc.title = _titleArray[indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else if (indexPath.row == 2) {
-        CAAnimationController *vc = [[CAAnimationController alloc] init];
-        vc.title = _titleArray[indexPath.row];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else if (indexPath.row == 3) {
-        CustomTransitionAnimationController *vc = [[CustomTransitionAnimationController alloc] init];
-        vc.title = _titleArray[indexPath.row];
+        // 创建动画
+        CATransition *transition = [CATransition animation];
+        transition.duration = .35;
+        transition.timingFunction = UIViewAnimationCurveEaseInOut;
+        transition.type = @"cube";
+        transition.subtype = kCATransitionFromRight;
+        
+        CustomAnimationController *vc = [storyboard instantiateViewControllerWithIdentifier:@"Custom"];
+        vc.type = indexPath.row;
+        [self customPushViewControllerWihtTransition:transition viewController:vc];
+    } else {
+        SwitchChildViewController *vc = [[SwitchChildViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

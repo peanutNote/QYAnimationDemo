@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SwitchChildViewController.h
 //  QYAnimationDemo
 //
 //  Created by qianye on 17/1/5.
@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface SwitchChildViewController : UIViewController
 
 @end
-

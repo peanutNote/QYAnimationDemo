@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  GradientProcessView.h
 //  QYAnimationDemo
 //
 //  Created by qianye on 17/1/5.
@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface GradientProcessView : UIView
+
+@property (nonatomic, assign) CGFloat percent;
 
 @end
-

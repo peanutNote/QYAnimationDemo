@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CAAnimationDetailController.h
 //  QYAnimationDemo
 //
 //  Created by qianye on 17/1/5.
@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface CAAnimationDetailController : UIViewController
+
+@property (nonatomic, assign) NSInteger type;
 
 @end
-
