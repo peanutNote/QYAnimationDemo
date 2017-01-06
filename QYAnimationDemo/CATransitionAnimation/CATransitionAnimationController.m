@@ -165,10 +165,10 @@ static CGFloat duration = .7f;
     
 //    animation.delegate = self;
     
-    //设置运动type
+    //设置运动type/转场动画类型
     animation.type = type;
     if (subtype != nil) {
-        //设置子类
+        //设置子类/动画方向
         animation.subtype = subtype;
     }
     

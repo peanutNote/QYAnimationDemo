@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _titleArray = @[@"CABasicAnimation动画", @"CAKeyframeAnimation动画", @"CAAnimationGroup动画", @"CASpringAnimation动画", @"CATransaction事物动画", @"路径结合动画实例"];
+    _titleArray = @[@"CABasicAnimation动画", @"CAKeyframeAnimation动画", @"CAAnimationGroup动画", @"CASpringAnimation动画", @"CATransaction事物动画", @"路径结合动画实例", @"DisplayLink结合动画"];
     [self mmInitViews];
 }
 

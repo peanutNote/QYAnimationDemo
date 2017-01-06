@@ -8,6 +8,7 @@
 
 #import "CAAnimationDetailController.h"
 #import "GradientProcessView.h"
+#import "DisplayLinkAnimation.h"
 
 @interface CAAnimationDetailController ()<CAAnimationDelegate>
 
@@ -32,40 +33,46 @@
 #pragma mark - initViews
 
 - (void)mmInitViews {
-    if (_type != 5) {
-        if (!_animationLayer) {
-            _animationLayer = [CALayer layer];
-            _animationLayer.frame = CGRectMake(0, 0, 64, 64);
-            _animationLayer.position = CGPointMake(32, 150);
-            _animationLayer.backgroundColor = [UIColor greenColor].CGColor;
-            [self.view.layer addSublayer:_animationLayer];
+    if (_type != 6) {
+        if (_type < 5) {
+            if (!_animationLayer) {
+                _animationLayer = [CALayer layer];
+                _animationLayer.frame = CGRectMake(0, 0, 64, 64);
+                _animationLayer.position = CGPointMake(32, 150);
+                _animationLayer.backgroundColor = [UIColor greenColor].CGColor;
+                [self.view.layer addSublayer:_animationLayer];
+            }
+            if (_type == 2) {
+                _bezierPath = [[UIBezierPath alloc] init];
+                [_bezierPath moveToPoint:CGPointMake(32, 150)];
+                [_bezierPath addCurveToPoint:CGPointMake(332, 150)
+                               controlPoint1:CGPointMake(108, 0)
+                               controlPoint2:CGPointMake(257, 300)];
+                
+                CAShapeLayer *pathLayer = [CAShapeLayer layer];
+                pathLayer.path = _bezierPath.CGPath;
+                pathLayer.fillColor = [UIColor clearColor].CGColor;
+                pathLayer.strokeColor = [UIColor redColor].CGColor;
+                pathLayer.lineWidth = 3.0f;
+                [self.view.layer addSublayer:pathLayer];
+            }
+        } else if (_type == 5) {
+            _processView = [[GradientProcessView alloc] initWithFrame:CGRectMake(20, 150, kScreenWidth - 20, 45)];
+            _processView.percent = 0;
+            [self.view addSubview:_processView];
         }
-        if (_type == 2) {
-            _bezierPath = [[UIBezierPath alloc] init];
-            [_bezierPath moveToPoint:CGPointMake(32, 150)];
-            [_bezierPath addCurveToPoint:CGPointMake(332, 150)
-                           controlPoint1:CGPointMake(108, 0)
-                           controlPoint2:CGPointMake(257, 300)];
-            
-            CAShapeLayer *pathLayer = [CAShapeLayer layer];
-            pathLayer.path = _bezierPath.CGPath;
-            pathLayer.fillColor = [UIColor clearColor].CGColor;
-            pathLayer.strokeColor = [UIColor redColor].CGColor;
-            pathLayer.lineWidth = 3.0f;
-            [self.view.layer addSublayer:pathLayer];
-        }
+        
+        _startBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _startBtn.frame = CGRectMake(0, 400, kScreenWidth, 45);
+        [_startBtn setTitle:@"开始动画" forState:UIControlStateNormal];
+        [_startBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_startBtn addTarget:self action:@selector(startAnimation:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_startBtn];
     } else {
-        _processView = [[GradientProcessView alloc] initWithFrame:CGRectMake(20, 150, kScreenWidth - 20, 45)];
-        _processView.percent = 0;
-        [self.view addSubview:_processView];
+        DisplayLinkAnimation *cuteView = [[DisplayLinkAnimation alloc] initWithFrame:CGRectMake(0, 64, 320, 568)];
+        cuteView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:cuteView];
     }
-    
-    _startBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _startBtn.frame = CGRectMake(0, 400, kScreenWidth, 45);
-    [_startBtn setTitle:@"开始动画" forState:UIControlStateNormal];
-    [_startBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [_startBtn addTarget:self action:@selector(startAnimation:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_startBtn];
 }
 
 - (void)startAnimation:(UIButton *)sender {

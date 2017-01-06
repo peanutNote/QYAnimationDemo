@@ -11,6 +11,7 @@
 #import "CATransitionAnimationController.h"
 #import "CustomTransitionAnimationController.h"
 #import "CAAnimationController.h"
+#import "PopAnimationController.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -26,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _titleArray = @[@"UIView属性动画", @"CATransition动画", @"CAAnimation动画", @"自定义过场动画"];
+    _titleArray = @[@"UIView属性动画", @"CATransition动画", @"CAAnimation动画", @"自定义过场动画", @"pop简单使用"];
     [self mmInitViews];
 }
 
@@ -71,6 +72,10 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (indexPath.row == 3) {
         CustomTransitionAnimationController *vc = [[CustomTransitionAnimationController alloc] init];
+        vc.title = _titleArray[indexPath.row];
+        [self.navigationController pushViewController:vc animated:YES];
+    } else if (indexPath.row == 4) {
+        PopAnimationController *vc = [[PopAnimationController alloc] init];
         vc.title = _titleArray[indexPath.row];
         [self.navigationController pushViewController:vc animated:YES];
     }
