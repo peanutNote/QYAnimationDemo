@@ -78,16 +78,12 @@
     [CATransaction setValue:[NSNumber numberWithFloat:2.0f]
                      forKey:kCATransactionAnimationDuration]; // 设定隐式事务处理时间
     [self setLayerBound];
-    [CATransaction begin];
     [CATransaction setValue:[NSNumber numberWithFloat:4.0f]
                      forKey:kCATransactionAnimationDuration]; // 设定隐式事务处理时间
     [self setLayerBC];
-    [CATransaction begin];
     [CATransaction setValue:[NSNumber numberWithFloat:6.0f]
                      forKey:kCATransactionAnimationDuration]; // 设定隐式事务处理时间
     [self setLayerPosition];
-    [CATransaction commit];
-    [CATransaction commit];
     [CATransaction commit];
 }
 
